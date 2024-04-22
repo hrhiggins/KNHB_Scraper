@@ -1,43 +1,55 @@
-import time
-import requests
-from bs4 import BeautifulSoup
 from pyshadow.main import Shadow
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-
+import pandas as pd
+from openpyxl import load_workbook
 
 # page to access as a string
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
 driver = webdriver.Chrome()
 driver.get(url)
-driver.implicitly_wait(3)
+driver.implicitly_wait(5)
 
-driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
-driver.implicitly_wait(3)
+cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
+if cookies_popup:
+    driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
+    driver.implicitly_wait(5)
 
-#root1 = driver.find_element(By.CSS_SELECTOR, ".tcol12 > match-center:nth-child(2)")
-#shadow_root = root1.shadow_root
-#shadow_content = shadow_root.find_element(By.TAG_NAME, "span")
+shadow = Shadow(driver)
+z = shadow.chrome_driver.get('https://www.knhb.nl/match-center#/competitions/N7/results')
+element = shadow.find_element("match-center")
+shadow.set_implicit_wait(3)
+text = element.text
+text = text.splitlines()
 
-#shadow = Shadow(driver)
-#element = shadow.find_element()
-#element.click()
-#driver.implicitly_wait(3)
+text_odd = text[1::2]
+text_even = text[0::2]
 
-shadow_host1 = driver.find_element(By.CSS_SELECTOR, '.tcol12 > match-center:nth-child(2)')
-shadow_root1 = driver.execute_script('return arguments[0].shadowRoot', shadow_host1)
-shadow_content = shadow_host1.text
-print (shadow_content)
+team_away = []
+team_home = []
+pool = []
+score = []
 
-# create beautifulsoup object
-#soup = BeautifulSoup(driver.page_source, "html.parser")
 
-#span_tags = soup.find_all(By.TAG_NAME, 'span')
+def has_numbers(inputString):
+    return any(char.isdigit() for char in inputString)
 
-# find and print all text in the span tags
-#for span in span_tags:
- # print(span.text)
 
-#driver.quit()
+for s in text_odd:
+    if "H1" in s:
+        team_home.append(s)
+    elif len(s) == 1:
+        pool.append(s)
 
+for s in text_even:
+    if "H1" in s:
+        team_away.append(s)
+    elif has_numbers(s) and "-" in s and len(s) < 10:
+        score.append(s)
+
+pd_array = pd.DataFrame(data=[team_home, score, team_away, pool]).T
+
+print(pd_array)
+pd_array.to_excel("C:\H1Results\h1_results.xlsx", sheet_name='Sheet1', startcol=1)
+
+driver.close()
