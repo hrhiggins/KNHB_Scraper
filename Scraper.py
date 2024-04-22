@@ -1,25 +1,43 @@
+import time
 import requests
 from bs4 import BeautifulSoup
+from pyshadow.main import Shadow
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
 
 # page to access as a string
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
+driver = webdriver.Chrome()
+driver.get(url)
+driver.implicitly_wait(3)
 
-# request.get function fetches the raw html
-page = requests.get(url)
+driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
+driver.implicitly_wait(3)
+
+#root1 = driver.find_element(By.CSS_SELECTOR, ".tcol12 > match-center:nth-child(2)")
+#shadow_root = root1.shadow_root
+#shadow_content = shadow_root.find_element(By.TAG_NAME, "span")
+
+#shadow = Shadow(driver)
+#element = shadow.find_element()
+#element.click()
+#driver.implicitly_wait(3)
+
+shadow_host1 = driver.find_element(By.CSS_SELECTOR, '.tcol12 > match-center:nth-child(2)')
+shadow_root1 = driver.execute_script('return arguments[0].shadowRoot', shadow_host1)
+shadow_content = shadow_host1.text
+print (shadow_content)
 
 # create beautifulsoup object
-soup = BeautifulSoup(page.text, "html.parser")
+#soup = BeautifulSoup(driver.page_source, "html.parser")
 
-# badges = soup.body.find('div', attrs={'class': 'badges'})
-#for span in badges.span.find_all('span', recursive=False):
- #   print
+#span_tags = soup.find_all(By.TAG_NAME, 'span')
 
-span_tags = soup.find_all('span')
-for span in span_tags:
-    print(span.text)
+# find and print all text in the span tags
+#for span in span_tags:
+ # print(span.text)
 
-#li_tags = soup.find_all('li')
-#for li in li_tags:
-    #print(li.text)
-
+#driver.quit()
 
