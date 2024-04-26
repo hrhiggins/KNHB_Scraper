@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 import numpy as np
 from openpyxl import load_workbook
-import re
 
 # page to access as a string
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
@@ -23,6 +22,7 @@ element = shadow.find_element("match-center")
 shadow.set_implicit_wait(5)
 text = element.text
 text = text.splitlines()
+driver.close()
 
 # months in dutch
 months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
@@ -66,11 +66,24 @@ for s in score:
 
 split_scores = np.array(split_scores).flatten()
 home_score = split_scores[0::2]
+home_score = pd.to_numeric(home_score)
 away_score = split_scores[1::2]
+away_score = pd.to_numeric(away_score)
 
-pd_array = pd.DataFrame(data=[team_home, home_score, away_score, team_away, pool]).T
+new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, pool]).T
 
-print(pd_array)
-pd_array.to_excel("C:\H1Results\h1_results.xlsx", sheet_name='Sheet1', startcol=1)
+# location of excel file with results
+file_path = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\H1\1K_results_2324.xlsx"
 
-driver.close()
+# read the current scores off the excel file
+old_results = pd.read_excel(file_path, sheet_name='All Results')
+# create a data frame of the old and new results
+all_results = pd.concat([new_results, old_results])
+# remove duplicate results
+all_results = all_results.drop_duplicates()
+# write all the results to the excel file
+all_results.to_excel(file_path, sheet_name='All Results', index=False)
+
+print("results uploaded")
+
+##### NEXT: IF POOL COLUMN = A THEN ADD THAT ROW TO 'POOL A' RESULTS SHEET
