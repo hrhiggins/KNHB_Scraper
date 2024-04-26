@@ -98,9 +98,4 @@ for team in all_results['Home Team'].unique():
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         team_df.to_excel(writer, sheet_name=team, index=False)
 
-#'score_df' = pd.DataFrame(data=[[home_score] - [away_score])
-
-
-
-
 print("results uploaded")
