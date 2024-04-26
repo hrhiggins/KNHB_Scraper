@@ -5,26 +5,28 @@ import pandas as pd
 import numpy as np
 from openpyxl import load_workbook
 import re
+import itertools
 
 # page to access as a string
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
 driver = webdriver.Chrome()
 driver.get(url)
-driver.implicitly_wait(5)
+driver.implicitly_wait(3)
 
 cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
 if cookies_popup:
     driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(3)
 
 shadow = Shadow(driver)
 z = shadow.chrome_driver.get('https://www.knhb.nl/match-center#/competitions/N7/results')
 element = shadow.find_element("match-center")
-shadow.set_implicit_wait(5)
+shadow.set_implicit_wait(3)
 text = element.text
 text = text.splitlines()
 
-# months in dutch
+
+wrong = []
 months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
           'november', 'december']
 # removing dates
@@ -33,8 +35,11 @@ for i in text:
         if k in i:
             text.remove(i)
 
-text_odd = text[1::2]
-text_even = text[0::2]
+print(text)
+print(wrong)
+
+text_odd = text[0::2]
+text_even = text[1::2]
 
 team_away = []
 team_home = []
@@ -47,13 +52,13 @@ def has_numbers(i):
     return any(char.isdigit() for char in i)
 
 
-for s in text_even:
+for s in text_odd:
     if "H1" in s:
         team_home.append(s)
     elif len(s) == 1:
         pool.append(s)
 
-for s in text_odd:
+for s in text_even:
     if "H1" in s:
         team_away.append(s)
     elif has_numbers(s) and "-" in s and len(s) < 6:
@@ -70,7 +75,5 @@ away_score = split_scores[1::2]
 
 pd_array = pd.DataFrame(data=[team_home, home_score, away_score, team_away, pool]).T
 
-print(pd_array)
-pd_array.to_excel("C:\H1Results\h1_results.xlsx", sheet_name='Sheet1', startcol=1)
 
 driver.close()
