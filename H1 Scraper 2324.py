@@ -102,18 +102,13 @@ all_results = all_results.drop_duplicates()
 with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
     all_results.to_excel(writer, sheet_name='All Results', index=False)
 
+# creating the pools dataframes
 pool_A = pd.DataFrame()
-pool_A = pool_A.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Goals For',
-                                4: 'Goals Against', 5: 'Goal Difference'})
 pool_B = pd.DataFrame()
-pool_B = pool_B.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Goals For',
-                                4: 'Goals Against', 5: 'Goal Difference'})
 pool_C = pd.DataFrame()
-pool_C = pool_C.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Goals For', 4: 'Goals Against',
-                                5: 'Goal Difference'})
 pool_D = pd.DataFrame()
-pool_D = pool_D.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Goals For', 4: 'Goals Against',
-                                5: 'Goal Difference'})
+home_results = pd.DataFrame()
+away_results = pd.DataFrame()
 
 for team in all_results['Home Team'].unique():
     team_df = pd.concat([all_results[all_results['Home Team'] == team].reset_index(drop=True),
@@ -122,16 +117,20 @@ for team in all_results['Home Team'].unique():
     team_df = team_df.set_axis(['Home Team', 'Home Score', 'Away Score', 'Away Team', 'Goal Difference',
                                 'Winner', 'Pool', 'home team', 'home score', 'away score', 'away team',
                                 'goal difference', 'winner', 'pool'], axis=1)
-    total_goals_for = sum(team_df['Home Score']) + sum(team_df['away score'])
-    total_goals_against = sum(team_df['Away Score']) + sum(team_df['home score'])
-    total_goal_difference = sum(team_df['Goal Difference']) - sum(team_df['goal difference'])
-    total_games_played = team_df['Home Team'].shape[0] + team_df['away team'].shape[0]
+    total_goals_for = team_df['Home Score'].sum(skipna=True) + team_df['away score'].sum(skipna=True)
+    total_goals_against = team_df['Away Score'].sum(skipna=True) + team_df['home score'].sum(skipna=True)
+    total_goal_difference = team_df['Goal Difference'].sum(skipna=True) - team_df['goal difference'].sum(skipna=True)
+    total_games_played = ((team_df[team_df['Home Team'] == team].shape[0]) +
+                          (team_df[team_df['away team'] == team].shape[0]))
     wins = (team_df[team_df['Winner'] == 'Home'].shape[0]) + (team_df[team_df['winner'] == 'Away'].shape[0])
     draws = (team_df[team_df['Winner'] == 'Draw'].shape[0]) + (team_df[team_df['winner'] == 'Draw'].shape[0])
     losses = (team_df[team_df['Winner'] == 'Away'].shape[0]) + (team_df[team_df['winner'] == 'Home'].shape[0])
     points = (wins*3)+(draws*1)
-    team_result = pd.DataFrame(data=[team, points, total_games_played, total_goals_for,
-                                     total_goals_against, total_goal_difference])
+    team_result = pd.DataFrame(data=[team, points, total_games_played, wins, draws, losses, total_goals_for,
+                                     total_goals_against, total_goal_difference]).T
+
+    with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+        team_df.to_excel(writer, sheet_name=team, index=False)
 
     try:
         pool = team_df.at[0, 'Pool']
@@ -151,10 +150,46 @@ for team in all_results['Home Team'].unique():
         pool_D = pd.concat([pool_D, team_result])
         pool_result = pool_D
 
+    pool_result = pool_result.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins', 4: 'Draws',
+                                              5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         pool_result.to_excel(writer, sheet_name=pool, index=False)
 
+    home_goals_for = team_df['Home Score'].sum(skipna=True)
+    home_goals_against = team_df['Away Score'].sum(skipna=True)
+    home_goal_difference = team_df['Goal Difference'].sum(skipna=True)
+    home_games_played = (team_df[team_df['Home Team'] == team].shape[0])
+    home_wins = (team_df[team_df['Winner'] == 'Home'].shape[0])
+    home_draws = (team_df[team_df['Winner'] == 'Draw'].shape[0])
+    home_losses = (team_df[team_df['Winner'] == 'Away'].shape[0])
+    home_points = (home_wins * 3) + (home_draws * 1)
+    home_team_result = pd.DataFrame(data=[team, home_points, home_games_played, home_wins, home_draws, home_losses,
+                                          home_goals_for, home_goals_against, home_goal_difference]).T
+    home_results = pd.concat([home_results.reset_index(drop=True), home_team_result.reset_index(drop=True)])
+
+    away_results = away_results.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins', 4: 'Draws',
+                                                5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        team_df.to_excel(writer, sheet_name=team, index=False)
+        home_results.to_excel(writer, sheet_name='Home Results', index=False)
+
+    away_goals_for = team_df['away score'].sum(skipna=True)
+    away_goals_against = team_df['home score'].sum(skipna=True)
+    away_goal_difference = 0 - team_df['goal difference'].sum(skipna=True)
+    away_games_played = (team_df[team_df['away team'] == team].shape[0])
+    away_wins = (team_df[team_df['winner'] == 'Home'].shape[0])
+    away_draws = (team_df[team_df['winner'] == 'Draw'].shape[0])
+    away_losses = (team_df[team_df['winner'] == 'Away'].shape[0])
+    away_points = (away_wins * 3) + (away_draws * 1)
+    away_team_result = pd.DataFrame(data=[team, away_points, away_games_played, away_wins, away_draws, away_losses,
+                                          away_goals_for, away_goals_against, away_goal_difference]).T
+    away_results = pd.concat([away_results.reset_index(drop=True), away_team_result.reset_index(drop=True)])
+
+    away_results = away_results.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins', 4: 'Draws',
+                                                5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+
+    with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+        away_results.to_excel(writer, sheet_name='Away Results', index=False)
 
 print("results uploaded")
