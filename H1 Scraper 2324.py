@@ -99,6 +99,7 @@ except IOError:
 all_results = pd.concat([new_results, old_results])
 # remove duplicate results
 all_results = all_results.drop_duplicates()
+
 with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
     all_results.to_excel(writer, sheet_name='All Results', index=False)
 
@@ -109,6 +110,10 @@ pool_C = pd.DataFrame()
 pool_D = pd.DataFrame()
 home_results = pd.DataFrame()
 away_results = pd.DataFrame()
+home_vs_away_results = pd.DataFrame()
+
+####################
+np.seterr(divide='ignore', invalid='ignore')
 
 for team in all_results['Home Team'].unique():
     team_df = pd.concat([all_results[all_results['Home Team'] == team].reset_index(drop=True),
@@ -166,10 +171,9 @@ for team in all_results['Home Team'].unique():
     home_points = (home_wins * 3) + (home_draws * 1)
     home_team_result = pd.DataFrame(data=[team, home_points, home_games_played, home_wins, home_draws, home_losses,
                                           home_goals_for, home_goals_against, home_goal_difference]).T
-    home_results = pd.concat([home_results.reset_index(drop=True), home_team_result.reset_index(drop=True)])
-
-    away_results = away_results.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins', 4: 'Draws',
-                                                5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+    home_team_result = home_team_result.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins',
+                                                        4: 'Draws', 5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+    home_results = pd.concat([home_results, home_team_result], ignore_index=True)
 
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         home_results.to_excel(writer, sheet_name='Home Results', index=False)
@@ -184,12 +188,67 @@ for team in all_results['Home Team'].unique():
     away_points = (away_wins * 3) + (away_draws * 1)
     away_team_result = pd.DataFrame(data=[team, away_points, away_games_played, away_wins, away_draws, away_losses,
                                           away_goals_for, away_goals_against, away_goal_difference]).T
-    away_results = pd.concat([away_results.reset_index(drop=True), away_team_result.reset_index(drop=True)])
+    away_team_result = away_team_result.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins',
+                                                        4: 'Draws', 5: 'Losses', 6: 'Goals For', 7: 'Goals Against',
+                                                        8: 'Goal Difference'})
+    away_results = pd.concat([away_results, away_team_result], ignore_index=True)
 
-    away_results = away_results.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins', 4: 'Draws',
-                                                5: 'Losses', 6: 'Goals For', 7: 'Goals Against', 8: 'Goal Difference'})
+    for column in away_results:
+        max_len = max(away_results[column].astype(str).map(len).max(), len(column)) + 1
 
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         away_results.to_excel(writer, sheet_name='Away Results', index=False)
+
+    try:
+        home_points_pcnt = home_points / points
+        home_points_pcnt = round((home_points_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        home_points_pcnt = 0
+
+    try:
+        away_points_pcnt = away_points / points
+        away_points_pcnt = round((away_points_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        away_points_pcnt = 0
+
+    try:
+        home_goals_for_pcnt = home_goals_for / total_goals_for
+        home_goals_for_pcnt = round((home_goals_for_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        home_goals_for_pcnt = 0
+
+    try:
+        away_goals_for_pcnt = away_goals_for / total_goals_for
+        away_goals_for_pcnt = round((away_goals_for_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        away_goals_for_pcnt = 0
+
+    try:
+        home_goals_against_pcnt = home_goals_against / total_goals_against
+        home_goals_against_pcnt = round((home_goals_against_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        home_goals_against_pcnt = 0
+
+    try:
+        away_goals_against_pcnt = away_goals_against / total_goals_against
+        away_goals_against_pcnt = round((away_goals_against_pcnt*100), 0)
+    except ZeroDivisionError or RuntimeWarning:
+        away_goals_against_pcnt = 0
+
+    home_vs_away_team_result = pd.DataFrame(data=[team, total_games_played, home_points_pcnt, away_points_pcnt,
+                                                  home_goals_for_pcnt, away_goals_for_pcnt, home_goals_against_pcnt,
+                                                  away_goals_against_pcnt]).T
+
+    home_vs_away_team_result = home_vs_away_team_result.rename(columns={0: 'Team', 1: 'Games Played',
+                                                                        2: '% Points Home',
+                                                                        3: '% Points Away', 4: '% Goals Scored Home',
+                                                                        5: '% Goals Scored Away',
+                                                                        6: '% Goals Conceded Home',
+                                                                        7: '% Goals Conceded Away'})
+
+    home_vs_away_results = pd.concat([home_vs_away_results, home_vs_away_team_result], ignore_index=True)
+
+    with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+        home_vs_away_results.to_excel(writer, sheet_name='Home Vs Away', index=False)
 
 print("results uploaded")
