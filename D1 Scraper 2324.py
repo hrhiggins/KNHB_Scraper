@@ -7,11 +7,8 @@ import shutil
 import datetime
 import math
 from UliPlot.XLSX import auto_adjust_xlsx_column_width
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
-from openpyxl.utils import get_column_letter
 from openpyxl.formatting.rule import ColorScaleRule
-from openpyxl.styles import Alignment, Font, NamedStyle
+from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
 now = str(datetime.datetime.now())[:19]
@@ -361,34 +358,33 @@ for team in all_results['Home Team'].unique():
 
     # rename columns of DataFrame
     home_vs_away_team_result = home_vs_away_team_result.rename(columns={0: 'Team', 1: 'Games Played',
-                                                                        2: '% Points Home',
-                                                                        3: '% Points Away', 4: '% Goals Scored Home',
-                                                                        5: '% Goals Scored Away',
-                                                                        6: '% Goals Conceded Home',
-                                                                        7: '% Goals Conceded Away'})
+                                                                        2: 'Points Home',
+                                                                        3: 'Points Away', 4: 'Goals Scored Home',
+                                                                        5: 'Goals Scored Away',
+                                                                        6: 'Goals Conceded Home',
+                                                                        7: 'Goals Conceded Away'})
 
     # concatenate specific team result to DataFrame of all teams
     home_vs_away_results = pd.concat([home_vs_away_results, home_vs_away_team_result], ignore_index=True)
 
     percentile_rule = ColorScaleRule(
         start_type='percentile',
-        start_value=10,
+        start_value=20,
         start_color='ffaaaa',  # red-ish
         mid_type='percentile',
         mid_value=50,
         mid_color='aaffaa',  # green-ish
         end_type='percentile',
-        end_value=90,
+        end_value=80,
         end_color='ffaaaa')  # red-ish
 
-    # custom named style for the index
-    index_style = NamedStyle(name="Index Style", font=Font(color='000000', italic=False, bold=True),
-                             alignment=Alignment(horizontal='left'))
+    thin = Side(border_style="thin", color="000000")
+    double = Side(border_style="double", color="000000")
 
     # write Home Vs Away DataFrame to specific Excel sheet
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as xlsx:
         home_vs_away_results.to_excel(xlsx, sheet_name='Home Vs Away', index=False)
-        # auto_adjust_xlsx_column_width(home_vs_away_results, writer, sheet_name='Home Vs Away')
+        auto_adjust_xlsx_column_width(home_vs_away_results, writer, sheet_name='Home Vs Away')
 
         ws = xlsx.sheets['Home Vs Away']
 
@@ -396,7 +392,7 @@ for team in all_results['Home Team'].unique():
         value_cells = 'C1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
         index_column = 'A'
 
-        ws.column_dimensions[index_column].width = 100
+        ws.column_dimensions[index_column].width = 21
 
         # color all value cells
         ws.conditional_formatting.add(value_cells, percentile_rule)
@@ -404,11 +400,13 @@ for team in all_results['Home Team'].unique():
         for row in ws[value_cells]:
             for cell in row:
                 cell.number_format = '0.00%'
-
-        # for cell in ws[index_column]:
-        #     cell.style = index_style
+                cell.border = Border(top=thin, left=double, right=double, bottom=thin)
+                cell.alignment = Alignment(horizontal='center', vertical='center')
 
         for cell in ws[title_row]:
             cell.style = 'Headline 1'
+            cell.border = Border(top=double, left=double, right=double, bottom=double)
+            cell.font = Font(bold=True)
+            cell.fill = PatternFill('solid', fgColor="BDD7EE")
 
 print("results uploaded")

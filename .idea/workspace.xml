@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="Finished?!">
+    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="formatting home vs away">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/D1 Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/D1 Scraper 2324.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/H1 Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/H1 Scraper 2324.py" afterDir="false" />
@@ -101,7 +101,7 @@
       <workItem from="1714669950395" duration="6753000" />
       <workItem from="1714821912493" duration="14373000" />
       <workItem from="1714845261805" duration="9471000" />
-      <workItem from="1714894205555" duration="4351000" />
+      <workItem from="1714894205555" duration="13586000" />
     </task>
     <task id="LOCAL-00001" summary="Began">
       <option name="closed" value="true" />
@@ -151,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714895094958</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="formatting home vs away">
+      <option name="closed" value="true" />
+      <created>1714907858331</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714907858331</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,11 +169,12 @@
     <MESSAGE value="Began" />
     <MESSAGE value="split columns into home and away scores" />
     <MESSAGE value="Finished?!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished?!" />
+    <MESSAGE value="formatting home vs away" />
+    <option name="LAST_COMMIT_MESSAGE" value="formatting home vs away" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_Scraper_2324.coverage" NAME="H1 Scraper 2324 Coverage Results" MODIFIED="1714906703387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_Scraper_2324.coverage" NAME="D1 Scraper 2324 Coverage Results" MODIFIED="1714907781336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_Scraper_2324.coverage" NAME="H1 Scraper 2324 Coverage Results" MODIFIED="1714940268721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_Scraper_2324.coverage" NAME="D1 Scraper 2324 Coverage Results" MODIFIED="1714931719333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Scraper.coverage" NAME="Scraper Coverage Results" MODIFIED="1714153013139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Test.coverage" NAME="Test Coverage Results" MODIFIED="1714425817889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_2Scraper_2324.coverage" NAME="D1 2Scraper 2324 Coverage Results" MODIFIED="1714846685572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
