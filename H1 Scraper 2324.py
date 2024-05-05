@@ -7,9 +7,30 @@ import shutil
 import datetime
 import math
 from UliPlot.XLSX import auto_adjust_xlsx_column_width
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.utils import get_column_letter
+from openpyxl.formatting.rule import ColorScaleRule
+from openpyxl.styles import Alignment, Font, NamedStyle, builtins
+from openpyxl.utils import get_column_letter
 
 now = str(datetime.datetime.now())[:19]
 now = now.replace(":", "_")
+
+percentile_rule = ColorScaleRule(
+    start_type='percentile',
+    start_value=10,
+    start_color='ffaaaa',  # red-ish
+    mid_type='num',
+    mid_value=50,
+    mid_color='aaffaa',  # green-ish
+    end_type='percentile',
+    end_value=90,
+    end_color='ffaaaa')  # red-ish
+
+# custom named style for the index
+index_style = NamedStyle(name="Index Style", font=Font(color='000000', italic=False, bold=True),
+                         alignment=Alignment(horizontal='left'))
 
 
 def replace_nan_with_zero(value):
@@ -315,42 +336,36 @@ for team in all_results['Home Team'].unique():
     # calculate % of points gained at home, if variables are 0 then set equal to 0
     if home_points and points != 0:
         home_points_pcnt = home_points / points
-        home_points_pcnt = round((home_points_pcnt * 100), 0)
     else:
         home_points_pcnt = 0
 
     # calculate % of points gained away, if variables are 0 then set equal to 0
     if away_points and points != 0:
         away_points_pcnt = away_points / points
-        away_points_pcnt = round((away_points_pcnt * 100), 0)
     else:
         away_points_pcnt = 0
 
     # calculate % of goals scored at home, if variables are 0 then set equal to 0
     if home_goals_for and total_goals_for != 0:
         home_goals_for_pcnt = home_goals_for / total_goals_for
-        home_goals_for_pcnt = round((home_goals_for_pcnt * 100), 0)
     else:
         home_goals_for_pcnt = 0
 
     # calculate % of goals scored away, if variables are 0 then set equal to 0
     if away_goals_for and total_goals_for != 0:
         away_goals_for_pcnt = away_goals_for / total_goals_for
-        away_goals_for_pcnt = round((away_goals_for_pcnt * 100), 0)
     else:
         away_goals_for_pcnt = 0
 
     # calculate % of goals conceded at home, if variables are 0 then set equal to 0
     if home_goals_against and total_goals_against != 0:
         home_goals_against_pcnt = home_goals_against / total_goals_against
-        home_goals_against_pcnt = round((home_goals_against_pcnt * 100), 0)
     else:
         home_goals_against_pcnt = 0
 
     # calculate % of goals conceded away, if variables are 0 then set equal to 0
     if away_goals_against and total_goals_against != 0:
         away_goals_against_pcnt = away_goals_against / total_goals_against
-        away_goals_against_pcnt = round((away_goals_against_pcnt * 100), 0)
     else:
         away_goals_against_pcnt = 0
 
@@ -374,5 +389,25 @@ for team in all_results['Home Team'].unique():
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         home_vs_away_results.to_excel(writer, sheet_name='Home Vs Away', index=False)
         auto_adjust_xlsx_column_width(home_vs_away_results, writer, sheet_name='Home Vs Away')
+
+        ws = writer.sheets['Home Vs Away']
+
+        index_column = 'A'
+        value_cells = 'C1:{col}{row}'.format(
+            col=get_column_letter(ws.max_column),
+            row=ws.max_row)
+        title_row = '1'
+        # color all value cells
+        ws.conditional_formatting.add(value_cells, percentile_rule)
+
+        for row in ws[value_cells]:
+            for cell in row:
+                cell.number_format = 'Percent'
+
+        for cell in ws[index_column]:
+            cell.style = 'Headline 2'
+
+        for cell in ws[title_row]:
+            cell.style = 'Headline 1'
 
 print("results uploaded")
