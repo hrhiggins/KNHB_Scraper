@@ -370,9 +370,45 @@ for team in all_results['Home Team'].unique():
     # concatenate specific team result to DataFrame of all teams
     home_vs_away_results = pd.concat([home_vs_away_results, home_vs_away_team_result], ignore_index=True)
 
+    percentile_rule = ColorScaleRule(
+        start_type='percentile',
+        start_value=10,
+        start_color='ffaaaa',  # red-ish
+        mid_type='percentile',
+        mid_value=50,
+        mid_color='aaffaa',  # green-ish
+        end_type='percentile',
+        end_value=90,
+        end_color='ffaaaa')  # red-ish
+
+    # custom named style for the index
+    index_style = NamedStyle(name="Index Style", font=Font(color='000000', italic=False, bold=True),
+                             alignment=Alignment(horizontal='left'))
+
     # write Home Vs Away DataFrame to specific Excel sheet
-    with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        home_vs_away_results.to_excel(writer, sheet_name='Home Vs Away', index=False)
-        auto_adjust_xlsx_column_width(home_vs_away_results, writer, sheet_name='Home Vs Away')
+    with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as xlsx:
+        home_vs_away_results.to_excel(xlsx, sheet_name='Home Vs Away', index=False)
+        # auto_adjust_xlsx_column_width(home_vs_away_results, writer, sheet_name='Home Vs Away')
+
+        ws = xlsx.sheets['Home Vs Away']
+
+        title_row = '1'
+        value_cells = 'C1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+        index_column = 'A'
+
+        ws.column_dimensions[index_column].width = 100
+
+        # color all value cells
+        ws.conditional_formatting.add(value_cells, percentile_rule)
+
+        for row in ws[value_cells]:
+            for cell in row:
+                cell.number_format = '0.00%'
+
+        # for cell in ws[index_column]:
+        #     cell.style = index_style
+
+        for cell in ws[title_row]:
+            cell.style = 'Headline 1'
 
 print("results uploaded")
