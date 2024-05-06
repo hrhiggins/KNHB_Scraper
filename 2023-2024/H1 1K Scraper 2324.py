@@ -11,45 +11,60 @@ from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
+# create data time string
 now = str(datetime.datetime.now())[:19]
 now = now.replace(":", "_")
 
 
+# function to set NaN values with 0
 def replace_nan_with_zero(value):
     return value if not math.isnan(value) else 0
+
+
+# function to check if an array string contains digits
+def has_numbers(x):
+    return any(char.isdigit() for char in x)
 
 
 # page to access as a string
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
 driver = webdriver.Chrome()
 driver.get(url)
+# wait if page has not loaded
 driver.implicitly_wait(5)
 
+# deal with cookies popup
 cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
 if cookies_popup:
     driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
     driver.implicitly_wait(10)
 
+# using the ShadowDriver, find the element with the scores
 shadow = Shadow(driver)
 z = shadow.chrome_driver.get('https://www.knhb.nl/match-center#/competitions/N7/results')
 element = shadow.find_element("match-center")
+# wait for the element to load
 shadow.set_implicit_wait(10)
 text = element.text
+# split each text string into a new line
 text = text.splitlines()
+# close the webdriver
 driver.close()
 
 # months in Dutch
 months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
           'november', 'december']
-# removing dates
+# removing dates for the data
 for i in text:
     for k in months:
         if k in i:
             text.remove(i)
 
+# split the data into even position and odd position
 text_odd = text[1::2]
 text_even = text[0::2]
 
+# creating all the used arrays
 team_away = []
 team_home = []
 pool = []
@@ -58,17 +73,14 @@ split_scores = []
 winner = []
 goal_difference = []
 
-
-def has_numbers(x):
-    return any(char.isdigit() for char in x)
-
-
+# filter even text into team name and pool
 for s in text_even:
     if "H1" in s:
         team_home.append(s)
     elif len(s) == 1:
         pool.append(s)
 
+# filter odd text into away team and score
 for s in text_odd:
     if "H1" in s:
         team_away.append(s)
@@ -80,6 +92,7 @@ for s in score:
     split_score = s.replace('-', ' ').split()
     split_scores.append(split_score)
 
+# filter the scores into a home score and an away score
 split_scores = np.array(split_scores).flatten()
 home_score = split_scores[0::2]
 home_score = pd.to_numeric(home_score)
@@ -87,30 +100,34 @@ away_score = split_scores[1::2]
 away_score = pd.to_numeric(away_score)
 goal_difference = pd.to_numeric(goal_difference)
 
+# create a DataFrame comprised of the new downloaded data
 new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool]).T
 new_results = new_results.rename(columns={0: 'Home Team', 1: 'Home Score', 2: 'Away Score', 3: 'Away Team',
                                           4: 'Goal Difference', 5: 'Winner', 6: 'Pool'})
 
+# calculate the goal difference stat
 new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
 
+# find out who won the game, based on goal difference
 new_results.loc[new_results['Goal Difference'] < 0, 'Winner'] = 'Away'
 new_results.loc[new_results['Goal Difference'] == 0, 'Winner'] = 'Draw'
 new_results.loc[new_results['Goal Difference'] > 0, 'Winner'] = 'Home'
 
-# location of Excel file with results
-file_path_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\H1\H1_1K_results_2324.xlsx"
-file_path_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\H1\H1_1K_results_2324.xlsx"
+# two possible locations of Excel file with results
+file_path_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\H1_1K_results_2324.xlsx"
+file_path_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\H1_1K_results_2324.xlsx"
 
-# read the current scores off the Excel file
+# read the current scores off the Excel file, check both places it could exist, locate folder to place backup
 try:
     old_results = pd.read_excel(file_path_little, sheet_name='All Results')
     file_path = file_path_little
-    dst_dir = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\H1\Previous\H1_1K_results_2324_"+str(now)+".xlsx"
+    dst_dir = (r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\H1_1K_results_2324_"
+               + str(now) + ".xlsx")
 except IOError:
     old_results = pd.read_excel(file_path_big, sheet_name='All Results')
     file_path = file_path_big
-    dst_dir = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\
-    H1\Previous\H1_1K_results_2324_"+str(now)+".xlsx"
+    dst_dir = (r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\H1_1K_results_2324_"
+               + str(now) + ".xlsx")
 
 # copy the previous Excel file to another folder for backup
 shutil.copy(file_path, dst_dir)
@@ -120,11 +137,12 @@ all_results = pd.concat([new_results, old_results])
 # remove duplicate results
 all_results = all_results.drop_duplicates()
 
+# write to All Results Excel Sheet
 with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
     all_results.to_excel(writer, sheet_name='All Results', index=False)
     auto_adjust_xlsx_column_width(all_results, writer, sheet_name='All Results')
 
-# creating the pools dataframes
+# creating all the dataframes used for each team
 pool_A = pd.DataFrame()
 pool_B = pd.DataFrame()
 pool_C = pd.DataFrame()
@@ -308,6 +326,7 @@ for team in all_results['Home Team'].unique():
     away_team_result = away_team_result.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Wins',
                                                         4: 'Draws', 5: 'Losses', 6: 'Goals For', 7: 'Goals Against',
                                                         8: 'Goal Difference'})
+
     # concatenate this specific team with all other teams
     away_results = pd.concat([away_results, away_team_result], ignore_index=True)
 
@@ -353,32 +372,34 @@ for team in all_results['Home Team'].unique():
         away_goals_against_pcnt = 0
 
     # create DataFrame of Home vs Away results for specific team
-    home_vs_away_team_result = pd.DataFrame(data=[team, total_games_played, home_points_pcnt, away_points_pcnt,
-                                                  home_goals_for_pcnt, away_goals_for_pcnt, home_goals_against_pcnt,
-                                                  away_goals_against_pcnt]).T
+    home_vs_away_team_result = pd.DataFrame(data=[team, pool, total_games_played, points, home_points_pcnt,
+                                                  away_points_pcnt, home_goals_for_pcnt, away_goals_for_pcnt,
+                                                  home_goals_against_pcnt, away_goals_against_pcnt]).T
 
     # rename columns of DataFrame
-    home_vs_away_team_result = home_vs_away_team_result.rename(columns={0: 'Team', 1: 'Games Played',
-                                                                        2: 'Points Home',
-                                                                        3: 'Points Away', 4: 'Goals Scored Home',
-                                                                        5: 'Goals Scored Away',
-                                                                        6: 'Goals Conceded Home',
-                                                                        7: 'Goals Conceded Away'})
+    home_vs_away_team_result = home_vs_away_team_result.rename(columns={0: 'Team', 1: 'Pool', 2: 'Games Played',
+                                                                        3: 'Points', 4: 'Points Home',
+                                                                        5: 'Points Away', 6: 'Goals Scored Home',
+                                                                        7: 'Goals Scored Away',
+                                                                        8: 'Goals Conceded Home',
+                                                                        9: 'Goals Conceded Away'})
 
     # concatenate specific team result to DataFrame of all teams
     home_vs_away_results = pd.concat([home_vs_away_results, home_vs_away_team_result], ignore_index=True)
 
+    # define the percentile rule to colour the stats
     percentile_rule = ColorScaleRule(
-        start_type='percentile',
-        start_value=20,
+        start_type='percent',
+        start_value=35,
         start_color='ffaaaa',  # red-ish
-        mid_type='percentile',
+        mid_type='percent',
         mid_value=50,
         mid_color='aaffaa',  # green-ish
-        end_type='percentile',
-        end_value=80,
+        end_type='percent',
+        end_value=65,
         end_color='ffaaaa')  # red-ish
 
+    # establish the size of different cell borders
     thin = Side(border_style="thin", color="000000")
     double = Side(border_style="double", color="000000")
 
@@ -389,80 +410,108 @@ for team in all_results['Home Team'].unique():
 
         ws = writer.sheets['Home Vs Away']
 
+        # define what areas of the sheet I will alter
         title_row = '1'
-        value_cells = 'C1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+        value_cells = 'E1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
         index_column = 'A'
 
+        # set the dimensions of the first (team) column
         ws.column_dimensions[index_column].width = 21
 
         # color all value cells
         ws.conditional_formatting.add(value_cells, percentile_rule)
 
+        # format the bulk of the data
         for row in ws[value_cells]:
             for cell in row:
                 cell.number_format = '0.0%'
                 cell.border = Border(top=thin, left=double, right=double, bottom=thin)
                 cell.alignment = Alignment(horizontal='center', vertical='center')
 
+        # formate the title row
         for cell in ws[title_row]:
             cell.style = 'Headline 1'
             cell.border = Border(top=double, left=double, right=double, bottom=double)
             cell.font = Font(bold=True)
             cell.fill = PatternFill('solid', fgColor="BDD7EE")
 
+    # calculate ppg_home, check if variables are real
     if home_points and home_games_played != 0:
         ppg_home = home_points / home_games_played
     else:
         ppg_home = 0
 
+    # calculate ppg_away, check if variables are real
     if away_points and away_games_played != 0:
         ppg_away = away_points / away_games_played
     else:
         ppg_away = 0
 
+    # calculate ppg_difference, check if variables are real
     if ppg_home and ppg_away != 0:
         ppg_difference = ppg_home - ppg_away
     else:
         ppg_difference = 0
 
-    relative_home_away_team = pd.DataFrame(data=[team, home_games_played, away_games_played, points, ppg_home,
+    # create dataframe of relative results
+    relative_home_away_team = pd.DataFrame(data=[team, pool, home_games_played, away_games_played, points, ppg_home,
                                                  ppg_away, ppg_difference]).T
 
-    relative_home_away_team = relative_home_away_team.rename(columns={0: 'Team', 1: 'GPh', 2: 'GPa', 3: 'Points',
-                                                                      4: 'PPG Home', 5: 'PPG Away',
-                                                                      6: 'PPG Difference'})
+    # rename dataframe columns
+    relative_home_away_team = relative_home_away_team.rename(columns={0: 'Team', 1: 'Pool', 2: 'GPh', 3: 'GPa',
+                                                                      4: 'Points',
+                                                                      5: 'PPG Home', 6: 'PPG Away',
+                                                                      7: 'PPG Difference'})
 
+    # add new relative results to already calculated ones
     relative_home_away = pd.concat([relative_home_away, relative_home_away_team], ignore_index=True)
 
+    # define the color scale rule for the ppg difference
     difference_rule = ColorScaleRule(
         start_type='num',
-        start_value=-3,
+        start_value=-1.2,
         start_color='ffaaaa',  # red-ish
         mid_type='num',
         mid_value=0,
         mid_color='aaffaa',  # green-ish
         end_type='num',
-        end_value=3,
+        end_value=1.2,
         end_color='ffaaaa')  # red-ish
 
+    # write relative home away stats to correct sheet
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
         relative_home_away.to_excel(writer, sheet_name='Relative Home Away', index=False)
+
+        # auto adjust column width
         auto_adjust_xlsx_column_width(relative_home_away, writer, sheet_name='Relative Home Away')
 
         ws = writer.sheets['Relative Home Away']
 
+        # define which sets of cells I want to format
         title_row = '1'
         index_column = 'A'
-        ppg_difference_cells = 'G1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+        general_cells = 'B1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+        ppg_difference_cells = 'H1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
 
+        # set with of Teams column
         ws.column_dimensions[index_column].width = 21
 
+        # define formatting of the general cells
+        for row in ws[general_cells]:
+            for cell in row:
+                cell.number_format = '0.00'
+                cell.border = Border(top=thin, left=double, right=double, bottom=thin)
+                cell.alignment = Alignment(horizontal='center', vertical='center')
+
+        # format the ppg difference cells with the correct color scale rule
         ws.conditional_formatting.add(ppg_difference_cells, difference_rule)
 
+        # format the title row
         for cell in ws[title_row]:
             cell.style = 'Headline 1'
             cell.border = Border(top=double, left=double, right=double, bottom=double)
             cell.font = Font(bold=True)
             cell.fill = PatternFill('solid', fgColor="BDD7EE")
 
+# show that the results are uploaded in the console
 print("results uploaded")
