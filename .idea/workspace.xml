@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="formatting home vs away">
-      <change afterPath="$PROJECT_DIR$/2023-2024/H1 OK Scraper 2324.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2023-2024/RUN ALL 2324.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/D1 1K Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/D1 2K Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/D1 HK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/D1 OK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/D1 PK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/H1 1K Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/H1 2K Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/H1 HK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/H1 OK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/H1 PK Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/RUN ALL 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/KNHB Scraper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/KNHB Scraper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/D1 Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/2023-2024/D1 1K Scraper 2324.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/H1 Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/2023-2024/H1 1K Scraper 2324.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" />
-    </list>
+    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="Lots of changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -133,7 +113,7 @@
       <workItem from="1714991555061" duration="4784000" />
       <workItem from="1715003681186" duration="581000" />
       <workItem from="1715005010188" duration="2901000" />
-      <workItem from="1715007958137" duration="464000" />
+      <workItem from="1715007958137" duration="498000" />
     </task>
     <task id="LOCAL-00001" summary="Began">
       <option name="closed" value="true" />
@@ -191,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714907858331</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Lots of changes">
+      <option name="closed" value="true" />
+      <created>1715008438601</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715008438601</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +190,8 @@
     <MESSAGE value="split columns into home and away scores" />
     <MESSAGE value="Finished?!" />
     <MESSAGE value="formatting home vs away" />
-    <option name="LAST_COMMIT_MESSAGE" value="formatting home vs away" />
+    <MESSAGE value="Lots of changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lots of changes" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Scraper.coverage" NAME="Scraper Coverage Results" MODIFIED="1714153013139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

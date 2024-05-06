@@ -17,3 +17,6 @@ try:
 
     print('All Programs Complete')
 except IOError:
+    with open(r"C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper\2023-2024\H1 OK Scraper 2324.py") as file:
+        exec(file.read())
+    print('H1 OK Scraper Complete (3/3)')
