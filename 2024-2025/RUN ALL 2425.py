@@ -49,8 +49,6 @@ try:
         exec(file.read())
     print('H1 2K Scraper Complete (10/10)')
 
-    print('All Programs Complete')
-
 except IOError:
     # run D1 HK Scraper
     with open(
@@ -122,4 +120,4 @@ except IOError:
         exec(file.read())
     print('H1 2K Scraper Complete (10/10)')
 
-    print('All Programs Complete')
+print('All Programs Complete')
