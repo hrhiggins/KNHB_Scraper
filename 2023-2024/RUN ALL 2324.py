@@ -5,7 +5,7 @@ try:
     print('D1 1K Scraper Complete (1/3)')
 
     # run H1 1K Scraper
-    with open(r"/2023-2024/H1 1K Scraper 2324.py") as file:
+    with open(r"C:\Users\Harry Higgins\PycharmProjects\pythonProject\2023-2024\H1 1K Scraper 2324.py") as file:
         exec(file.read())
     print('H1 1K Scraper Complete (2/3)')
 

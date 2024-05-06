@@ -11,7 +11,7 @@ from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
 
-def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little, dst_dir_big):
+def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -35,7 +35,6 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
 
     # using the ShadowDriver, find the element with the scores
     shadow = Shadow(driver)
-    z = shadow.chrome_driver.get(url)
     element = shadow.find_element("match-center")
     # wait for the element to load
     shadow.set_implicit_wait(10)
@@ -67,19 +66,35 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     winner = []
     goal_difference = []
 
-    # filter even text into team name and pool
-    for s in text_odd:
-        if gender in s:
-            team_home.append(s)
-        elif len(s) == 1:
-            pool.append(s)
+    if even == "True":
+        # filter even text into team name and pool
+        for s in text_even:
+            if gender in s:
+                team_home.append(s)
+            elif len(s) == 1:
+                pool.append(s)
 
-    # filter odd text into away team and score
-    for s in text_even:
-        if gender in s:
-            team_away.append(s)
-        elif has_numbers(s) and "-" in s and len(s) < 6:
-            score.append(s)
+        # filter odd text into away team and score
+        for s in text_odd:
+            if gender in s:
+                team_away.append(s)
+            elif has_numbers(s) and "-" in s and len(s) < 6:
+                score.append(s)
+
+    elif even == "False":
+        # filter even text into team name and pool
+        for s in text_odd:
+            if gender in s:
+                team_home.append(s)
+            elif len(s) == 1:
+                pool.append(s)
+
+        # filter odd text into away team and score
+        for s in text_even:
+            if gender in s:
+                team_away.append(s)
+            elif has_numbers(s) and "-" in s and len(s) < 6:
+                score.append(s)
 
     # split the scores into home score and away score
     for s in score:
