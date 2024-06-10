@@ -1,4 +1,5 @@
 from General_Scraper import general_scraper
+from Only_Excel_DataParsing import only_excel_dataparsing
 import datetime
 
 # create data time string
@@ -16,3 +17,4 @@ dst_dir_big = (r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\202
 even = "True"
 
 scraper = general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even)
+# scraper = only_excel_dataparsing(file_path_little, file_path_big, dst_dir_little, dst_dir_big)

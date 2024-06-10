@@ -1,8 +1,4 @@
-from pyshadow.main import Shadow
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import pandas as pd
-import numpy as np
 import shutil
 import math
 from UliPlot.XLSX import auto_adjust_xlsx_column_width
@@ -11,7 +7,7 @@ from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
 
-def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
+def only_excel_dataparsing(file_path_little, file_path_big, dst_dir_little, dst_dir_big):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -20,118 +16,6 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     # function to check if an array string contains digits
     def has_numbers(x):
         return any(char.isdigit() for char in x)
-
-    # page to access as a string
-    driver = webdriver.Chrome()
-    driver.get(url)
-    # wait if page has not loaded
-    driver.implicitly_wait(5)
-
-    # deal with cookies popup
-    cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
-    if cookies_popup:
-        driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
-        driver.implicitly_wait(10)
-
-    # using the ShadowDriver, find the element with the scores
-    shadow = Shadow(driver)
-    element = shadow.find_element("match-center")
-    # wait for the element to load
-    shadow.set_implicit_wait(10)
-    text = element.text
-    # split each text string into a new line
-    text = text.splitlines()
-    # close the webdriver
-    driver.close()
-
-    # months in Dutch
-    months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
-              'november', 'december']
-    # removing dates for the data
-    for i in text:
-        for k in months:
-            if k in i:
-                text.remove(i)
-
-    # split the data into even position and odd position
-    text_odd = text[1::2]
-    text_even = text[0::2]
-
-    print(text)
-    print(text_even)
-    print(text_odd)
-
-    # creating all the used arrays
-    team_away = []
-    team_home = []
-    pool = []
-    score = []
-    split_scores = []
-    winner = []
-    goal_difference = []
-
-    if even == "True":
-        # filter even text into team name and pool
-        for s in text_even:
-            if gender in s:
-                team_home.append(s)
-            elif len(s) == 1:
-                pool.append(s)
-
-        # filter odd text into away team and score
-        for s in text_odd:
-            if gender in s:
-                team_away.append(s)
-            elif has_numbers(s) and "-" in s and len(s) < 6:
-                score.append(s)
-            elif s == 'Afgelast':
-                score.append(69 - 69)
-
-    elif even == "False":
-        # filter even text into team name and pool
-        for s in text_odd:
-            if gender in s:
-                team_home.append(s)
-            elif len(s) == 1:
-                pool.append(s)
-
-        # filter odd text into away team and score
-        for s in text_even:
-            if gender in s:
-                team_away.append(s)
-            elif has_numbers(s) and "-" in s and len(s) < 6:
-                score.append(s)
-            elif s == 'Afgelast':
-                score.append(69 - 69)
-
-    # split the scores into home score and away score
-    for s in score:
-        split_score = s.replace('-', ' ').split()
-        split_scores.append(split_score)
-
-    # filter the scores into a home score and an away score
-    split_scores = np.array(split_scores).flatten()
-    home_score = split_scores[0::2]
-    home_score = pd.to_numeric(home_score)
-    away_score = split_scores[1::2]
-    away_score = pd.to_numeric(away_score)
-    goal_difference = pd.to_numeric(goal_difference)
-
-    # create a DataFrame comprised of the new downloaded data
-    new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool]).T
-    new_results = new_results.rename(columns={0: 'Home Team', 1: 'Home Score', 2: 'Away Score', 3: 'Away Team',
-                                              4: 'Goal Difference', 5: 'Winner', 6: 'Pool'})
-
-    ######### finish writing a line to drop a row containing scores of 69 and 69
-    new_results = new_results
-
-    # calculate the goal difference stat
-    new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
-
-    # find out who won the game, based on goal difference
-    new_results.loc[new_results['Goal Difference'] < 0, 'Winner'] = 'Away'
-    new_results.loc[new_results['Goal Difference'] == 0, 'Winner'] = 'Draw'
-    new_results.loc[new_results['Goal Difference'] > 0, 'Winner'] = 'Home'
 
     # read the current scores off the Excel file, check both places it could exist, locate folder to place backup
     try:
@@ -147,9 +31,8 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     shutil.copy(file_path, dst_dir)
 
     # create a data frame of the old and new results
-    all_results = pd.concat([new_results, old_results])
+    all_results = old_results
     # remove duplicate results
-    all_results = all_results.drop_duplicates()
 
     # write to All Results Excel Sheet
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
