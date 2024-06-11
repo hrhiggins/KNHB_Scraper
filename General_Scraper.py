@@ -1,3 +1,4 @@
+import selenium.common.exceptions
 from pyshadow.main import Shadow
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,7 +12,7 @@ from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
 
-def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
+def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -21,28 +22,39 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     def has_numbers(x):
         return any(char.isdigit() for char in x)
 
-    # page to access as a string
-    driver = webdriver.Chrome()
-    driver.get(url)
-    # wait if page has not loaded
-    driver.implicitly_wait(5)
+    test = True
 
-    # deal with cookies popup
-    cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
-    if cookies_popup:
-        driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
-        driver.implicitly_wait(10)
+    # repeat until it works
+    while test:
+        try:
+            # page to access as a string
+            driver = webdriver.Chrome()
+            driver.get(url)
+            # wait if page has not loaded
+            driver.implicitly_wait(5)
 
-    # using the ShadowDriver, find the element with the scores
-    shadow = Shadow(driver)
-    element = shadow.find_element("match-center")
-    # wait for the element to load
-    shadow.set_implicit_wait(10)
-    text = element.text
-    # split each text string into a new line
-    text = text.splitlines()
-    # close the webdriver
-    driver.close()
+            # deal with cookies popup
+            cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
+            if cookies_popup:
+                driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]').click()
+                driver.implicitly_wait(10)
+
+            # using the ShadowDriver, find the element with the scores
+            shadow = Shadow(driver)
+            element = shadow.find_element("match-center")
+            # wait for the element to load
+            shadow.set_implicit_wait(10)
+            text = element.text
+            # split each text string into a new line
+            text = text.splitlines()
+            # close the webdriver
+            driver.close()
+            print('Success scraping from URL')
+            test = False
+
+        except selenium.common.exceptions.ElementNotVisibleException:
+            print('Error scraping from URL')
+            test = True
 
     # months in Dutch
     months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
@@ -57,10 +69,6 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     text_odd = text[1::2]
     text_even = text[0::2]
 
-    print(text)
-    print(text_even)
-    print(text_odd)
-
     # creating all the used arrays
     team_away = []
     team_home = []
@@ -73,36 +81,36 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     if even == "True":
         # filter even text into team name and pool
         for s in text_even:
-            if gender in s:
+            if 'D1' or 'H1' in s:
                 team_home.append(s)
             elif len(s) == 1:
                 pool.append(s)
 
         # filter odd text into away team and score
         for s in text_odd:
-            if gender in s:
+            if 'D1' or 'H1' in s:
                 team_away.append(s)
             elif has_numbers(s) and "-" in s and len(s) < 6:
                 score.append(s)
             elif s == 'Afgelast':
-                score.append(69 - 69)
+                score.append('69 - 69')
 
     elif even == "False":
         # filter even text into team name and pool
         for s in text_odd:
-            if gender in s:
+            if 'D1' or 'H1' in s:
                 team_home.append(s)
             elif len(s) == 1:
                 pool.append(s)
 
         # filter odd text into away team and score
         for s in text_even:
-            if gender in s:
+            if 'D1' or 'H1' in s:
                 team_away.append(s)
             elif has_numbers(s) and "-" in s and len(s) < 6:
                 score.append(s)
             elif s == 'Afgelast':
-                score.append(69 - 69)
+                score.append('69 - 69')
 
     # split the scores into home score and away score
     for s in score:
@@ -121,9 +129,6 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool]).T
     new_results = new_results.rename(columns={0: 'Home Team', 1: 'Home Score', 2: 'Away Score', 3: 'Away Team',
                                               4: 'Goal Difference', 5: 'Winner', 6: 'Pool'})
-
-    ######### finish writing a line to drop a row containing scores of 69 and 69
-    new_results = new_results
 
     # calculate the goal difference stat
     new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
@@ -150,6 +155,10 @@ def general_scraper(url, gender, file_path_little, file_path_big, dst_dir_little
     all_results = pd.concat([new_results, old_results])
     # remove duplicate results
     all_results = all_results.drop_duplicates()
+
+    # drop cancelled games where the scores of the games have been changed to 69 - 69
+    all_results = all_results.drop(all_results[(all_results['Home Score'] == 69) & (all_results['Away Score'] == 69)].
+                                   index)
 
     # write to All Results Excel Sheet
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
