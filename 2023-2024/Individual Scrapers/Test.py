@@ -7,11 +7,11 @@ now = str(datetime.datetime.now())[:19]
 now = now.replace(":", "_")
 
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
-file_path_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\H1_1K_results_2324.xlsx"
-file_path_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\H1_1K_results_2324.xlsx"
-dst_dir_little = (r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\H1_1K_results_2324_"
+file_path_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Test.xlsx"
+file_path_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Test.xlsx"
+dst_dir_little = (r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\Test_"
                   + str(now) + ".xlsx")
-dst_dir_big = (r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\H1_1K_results_2324_"
+dst_dir_big = (r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2023-2024\H1\Previous\Test_"
                + str(now) + ".xlsx")
 club_location_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\Club_locations.xlsx"
 club_location_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\Club_locations.xlsx"

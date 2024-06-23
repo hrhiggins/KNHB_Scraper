@@ -5,6 +5,7 @@ from UliPlot.XLSX import auto_adjust_xlsx_column_width
 from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
+import geopy.distance
 
 
 def only_excel_dataparsing(file_path_little, file_path_big, dst_dir_little, dst_dir_big):

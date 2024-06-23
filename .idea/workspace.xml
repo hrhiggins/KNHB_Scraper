@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="error to check for afgelast games">
-      <change afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 4K Scraper 2425.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 4K Scraper 2425.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2023-2024/Individual Scrapers/Test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2023-2024/RUN Test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2023-2024/Individual Scrapers/D1 1K Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/2023-2024/Individual Scrapers/D1 1K Scraper 2324.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2023-2024/Individual Scrapers/H1 1K Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/2023-2024/Individual Scrapers/H1 1K Scraper 2324.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2023-2024/Individual Scrapers/H1 OK Scraper 2324.py" beforeDir="false" afterPath="$PROJECT_DIR$/2023-2024/Individual Scrapers/H1 OK Scraper 2324.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General_Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/General_Scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Only_Excel_DataParsing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Only_Excel_DataParsing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,41 +48,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Python.D1 1K Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.D1 2Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.D1 Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.D12 1K Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.D12 Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.General_Scraper.executor&quot;: &quot;Run&quot;,
-    &quot;Python.H1 1K Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.H1 OK Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.H1 Overgangseklasse Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.H1 Scraper 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Only_Excel_Dataparsing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.RUN ALL 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.RUN ALL TEST 2324.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Scraper.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Harry/OneDrive/University Work/S4/Project/GitHub/KNHB_Scraper&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.D1 1K Scraper 2324.executor": "Run",
+    "Python.D1 2Scraper 2324.executor": "Run",
+    "Python.D1 Scraper 2324.executor": "Run",
+    "Python.D12 1K Scraper 2324.executor": "Run",
+    "Python.D12 Scraper 2324.executor": "Run",
+    "Python.General_Scraper.executor": "Run",
+    "Python.H1 1K Scraper 2324.executor": "Run",
+    "Python.H1 OK Scraper 2324.executor": "Run",
+    "Python.H1 Overgangseklasse Scraper 2324.executor": "Run",
+    "Python.H1 Scraper 2324.executor": "Run",
+    "Python.Only_Excel_Dataparsing.executor": "Run",
+    "Python.RUN ALL 2324.executor": "Run",
+    "Python.RUN ALL TEST 2324.executor": "Run",
+    "Python.RUN Test.executor": "Run",
+    "Python.Scraper.executor": "Run",
+    "Python.Test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Harry/OneDrive/University Work/S4/Project/GitHub/KNHB_Scraper/2023-2024",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper\2023-2024" />
+      <recent name="C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper\2023-2024\Individual Scrapers" />
       <recent name="C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper" />
       <recent name="C:\Users\Harry Higgins\PycharmProjects\pythonProject\2023-2024" />
       <recent name="C:\Users\Harry Higgins\PycharmProjects\pythonProject" />
@@ -132,7 +134,9 @@
       <workItem from="1715007958137" duration="498000" />
       <workItem from="1715008496017" duration="6738000" />
       <workItem from="1718042338690" duration="5156000" />
-      <workItem from="1718095409719" duration="1967000" />
+      <workItem from="1718095409719" duration="2265000" />
+      <workItem from="1718173979702" duration="771000" />
+      <workItem from="1719164948763" duration="6208000" />
     </task>
     <task id="LOCAL-00001" summary="Began">
       <option name="closed" value="true" />
@@ -238,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718054871682</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="error to check for afgelast games">
+      <option name="closed" value="true" />
+      <created>1718097665071</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1718097665071</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,11 +274,12 @@
     <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_ALL_TEST_2324.coverage" NAME="RUN ALL TEST 2324 Coverage Results" MODIFIED="1715011920122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_ALL_2324.coverage" NAME="RUN ALL 2324 Coverage Results" MODIFIED="1715014684705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$General_Scraper.coverage" NAME="General_Scraper Coverage Results" MODIFIED="1718054215221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_OK_Scraper_2324.coverage" NAME="H1 OK Scraper 2324 Coverage Results" MODIFIED="1718097443109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_OK_Scraper_2324.coverage" NAME="H1 OK Scraper 2324 Coverage Results" MODIFIED="1718097611844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_Scraper_2324.coverage" NAME="D1 Scraper 2324 Coverage Results" MODIFIED="1714999085903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Test.coverage" NAME="Test Coverage Results" MODIFIED="1714425817889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_2Scraper_2324.coverage" NAME="D1 2Scraper 2324 Coverage Results" MODIFIED="1714846685572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D12_Scraper_2324.coverage" NAME="D12 Scraper 2324 Coverage Results" MODIFIED="1714993729551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_Test.coverage" NAME="RUN Test Coverage Results" MODIFIED="1719171022531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_Overgangseklasse_Scraper_2324.coverage" NAME="H1 Overgangseklasse Scraper 2324 Coverage Results" MODIFIED="1715004150597" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Only_Excel_Dataparsing.coverage" NAME="Only_Excel_Dataparsing Coverage Results" MODIFIED="1718053023845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

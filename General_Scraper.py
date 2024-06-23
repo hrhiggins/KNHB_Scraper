@@ -10,9 +10,11 @@ from UliPlot.XLSX import auto_adjust_xlsx_column_width
 from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
+import geopy.distance
 
 
-def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
+def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big,
+                    club_location_little, club_location_big, even):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -56,6 +58,18 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
             print('Error scraping from URL')
             test = True
 
+    # read the current scores off the Excel file, check both places it could exist, locate folder to place backup
+    try:
+        old_results = pd.read_excel(file_path_little, sheet_name='All Results')
+        file_path = file_path_little
+        dst_dir = dst_dir_little
+        club_locations = pd.read_excel(club_location_little, sheet_name='clubs')
+    except IOError:
+        old_results = pd.read_excel(file_path_big, sheet_name='All Results')
+        file_path = file_path_big
+        dst_dir = dst_dir_big
+        club_locations = pd.read_excel(club_location_big, sheet_name='clubs')
+
     # months in Dutch
     months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
               'november', 'december']
@@ -77,6 +91,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
     split_scores = []
     winner = []
     goal_difference = []
+    distance = []
 
     if even == "True":
         # filter even text into team name and pool
@@ -126,27 +141,28 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
     goal_difference = pd.to_numeric(goal_difference)
 
     # create a DataFrame comprised of the new downloaded data
-    new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool]).T
+    new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool,
+                                     distance]).T
     new_results = new_results.rename(columns={0: 'Home Team', 1: 'Home Score', 2: 'Away Score', 3: 'Away Team',
-                                              4: 'Goal Difference', 5: 'Winner', 6: 'Pool'})
+                                              4: 'Goal Difference', 5: 'Winner', 6: 'Pool', 7: 'Distance'})
 
     # calculate the goal difference stat
     new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
+
+    for s in new_results['Home Team']:
+        try:
+            club = s.replace('D1' or 'H1', '')
+            club_locations['Club'] == club
+        except IOError:
+            print(s, 'is not listed in club locations document')
+            exit()
+
+    new_results['Distance'] = geopy.distance.geodesic(club_locations[club_locations['Club'] == (new_results['Home Team'].replace('D1' or 'H1', ''))]['Location'], club_locations[club_locations['Club'] == (new_results['Away Team'].replace('D1' or 'H1', ''))]['Location']).km
 
     # find out who won the game, based on goal difference
     new_results.loc[new_results['Goal Difference'] < 0, 'Winner'] = 'Away'
     new_results.loc[new_results['Goal Difference'] == 0, 'Winner'] = 'Draw'
     new_results.loc[new_results['Goal Difference'] > 0, 'Winner'] = 'Home'
-
-    # read the current scores off the Excel file, check both places it could exist, locate folder to place backup
-    try:
-        old_results = pd.read_excel(file_path_little, sheet_name='All Results')
-        file_path = file_path_little
-        dst_dir = dst_dir_little
-    except IOError:
-        old_results = pd.read_excel(file_path_big, sheet_name='All Results')
-        file_path = file_path_big
-        dst_dir = dst_dir_big
 
     # copy the previous Excel file to another folder for backup
     shutil.copy(file_path, dst_dir)
@@ -184,8 +200,8 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
 
         # renaming all the columns of the data frame
         team_df = team_df.set_axis(['Home Team', 'Home Score', 'Away Score', 'Away Team', 'Goal Difference',
-                                    'Winner', 'Pool', 'home team', 'home score', 'away score', 'away team',
-                                    'goal difference', 'winner', 'pool'], axis=1)
+                                    'Winner', 'Pool', 'Distance', 'home team', 'home score', 'away score', 'away team',
+                                    'goal difference', 'winner', 'pool', 'distance'], axis=1)
 
         # calculate team goals scored, if NaN replace with 0
         total_goals_for = team_df['Home Score'].sum(skipna=True) + team_df['away score'].sum(skipna=True)
@@ -537,6 +553,10 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
                 cell.border = Border(top=double, left=double, right=double, bottom=double)
                 cell.font = Font(bold=True)
                 cell.fill = PatternFill('solid', fgColor="BDD7EE")
+
+
+
+
 
     # show that the results are uploaded in the console
     print("results uploaded")
