@@ -15,7 +15,7 @@ dst_dir_big = (r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\202
                + str(now) + ".xlsx")
 club_location_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\Club_locations.xlsx"
 club_location_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\Club_locations.xlsx"
-even = "True"
+even = "False"
 
 scraper = general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, club_location_little,
                           club_location_big, even)
