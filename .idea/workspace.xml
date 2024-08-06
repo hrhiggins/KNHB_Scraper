@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="distance per km">
-      <change afterPath="$PROJECT_DIR$/Test_General_Scraper.py" afterDir="false" />
+    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="removed distance per km from general scraper, put in 'test general scraper'. Now fully functional">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 1K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 1K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 2K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 2K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 3K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 3K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 4K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 4K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 HK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 HK Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 OK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 OK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 PK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 PK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 1K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 1K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 2K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 2K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 3K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 3K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 4K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 4K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 HK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 HK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 OK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 OK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 PK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 PK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/RUN ALL 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/RUN ALL 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General_Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/General_Scraper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +135,7 @@
       <workItem from="1719164948763" duration="6645000" />
       <workItem from="1719171671063" duration="13174000" />
       <workItem from="1721320213700" duration="2102000" />
-      <workItem from="1722953832378" duration="2708000" />
+      <workItem from="1722953832378" duration="3792000" />
     </task>
     <task id="LOCAL-00001" summary="Began">
       <option name="closed" value="true" />
@@ -281,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719229322444</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="removed distance per km from general scraper, put in 'test general scraper'. Now fully functional">
+      <option name="closed" value="true" />
+      <created>1722956607975</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1722956607975</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +287,8 @@
     <MESSAGE value="Lots of changes" />
     <MESSAGE value="error to check for afgelast games" />
     <MESSAGE value="distance per km" />
-    <option name="LAST_COMMIT_MESSAGE" value="distance per km" />
+    <MESSAGE value="removed distance per km from general scraper, put in 'test general scraper'. Now fully functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed distance per km from general scraper, put in 'test general scraper'. Now fully functional" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
