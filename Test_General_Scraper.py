@@ -10,10 +10,12 @@ from UliPlot.XLSX import auto_adjust_xlsx_column_width
 from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
+import geopy.distance
 import re
 
 
-def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
+def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big,
+                    club_location_little, club_location_big, even):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -67,10 +69,12 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         old_results = pd.read_excel(file_path_little, sheet_name='All Results')
         file_path = file_path_little
         dst_dir = dst_dir_little
+        club_locations = pd.read_excel(club_location_little, sheet_name='clubs')
     except IOError:
         old_results = pd.read_excel(file_path_big, sheet_name='All Results')
         file_path = file_path_big
         dst_dir = dst_dir_big
+        club_locations = pd.read_excel(club_location_big, sheet_name='clubs')
 
     # months in Dutch
     months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
@@ -143,9 +147,10 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
     goal_difference = pd.to_numeric(goal_difference)
 
     # create a DataFrame comprised of the new downloaded data
-    new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool]).T
+    new_results = pd.DataFrame(data=[team_home, home_score, away_score, team_away, goal_difference, winner, pool,
+                                     distance]).T
     new_results = new_results.rename(columns={0: 'Home Team', 1: 'Home Score', 2: 'Away Score', 3: 'Away Team',
-                                              4: 'Goal Difference', 5: 'Winner', 6: 'Pool'})
+                                              4: 'Goal Difference', 5: 'Winner', 6: 'Pool', 7: 'Distance'})
 
     # calculate the goal difference stat
     new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
@@ -153,12 +158,21 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
     for s in new_results['Home Team']:
         for i in sex:
             s = s.replace(i, '')
+        try:
+            club_locations['Club'] == s
+        except KeyError:
+            print(s, 'is not listed in club locations document')
+            exit()
 
     for i in range(len(new_results)):
         h_team = new_results['Home Team'].iloc[i]
         h_club = h_team.replace('H1', '').replace('D1', '')
+        h_location = club_locations[club_locations['Club'] == h_club]['Location']
         a_team = new_results['Away Team'].iloc[i]
         a_club = a_team.replace('H1', '').replace('D1', '')
+        a_location = club_locations[club_locations['Club'] == a_club]['Location']
+        distance = round(geopy.distance.geodesic(h_location, a_location).km, 1)
+        new_results['Distance'].iloc[i] = distance
 
     # find out who won the game, based on goal difference
     new_results.loc[new_results['Goal Difference'] < 0, 'Winner'] = 'Away'
@@ -202,7 +216,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         # renaming all the columns of the data frame
         team_df = team_df.set_axis(['Home Team', 'Home Score', 'Away Score', 'Away Team', 'Goal Difference',
                                     'Winner', 'Pool', 'Distance', 'home team', 'home score', 'away score', 'away team',
-                                    'goal difference', 'winner', 'pool'], axis=1)
+                                    'goal difference', 'winner', 'pool', 'distance'], axis=1)
 
         # calculate team goals scored, if NaN replace with 0
         total_goals_for = team_df['Home Score'].sum(skipna=True) + team_df['away score'].sum(skipna=True)
@@ -565,6 +579,56 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
             end_type='num',
             end_value=1.2,
             end_color='ffaaaa')  # red-ish
+
+        # calculate total distance travelled
+        total_distance = team_df['distance'].sum(skipna=True)
+        try:
+            points_per_km = (away_points / total_distance)*100
+        except ZeroDivisionError:
+            points_per_km = 0
+
+        team_ppk_results = pd.DataFrame(data=[team, points, total_games_played, away_points, total_distance, points_per_km]).T
+        team_ppk_results = team_ppk_results.rename(columns={0: 'Team', 1: 'Points', 2: 'Games Played', 3: 'Away Points',
+                                                                          4: 'Total Distance',
+                                                                          5: 'Points per kM Travelled'})
+
+        with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+            team_ppk_results.to_excel(writer, sheet_name='Points Per kM', index=False)
+
+            # auto adjust column width
+            auto_adjust_xlsx_column_width(team_ppk_results, writer, sheet_name='Points Per kM')
+
+            ws = writer.sheets['Points Per kM']
+
+            # define which sets of cells I want to format
+            title_row = '1'
+            index_column = 'A'
+            general_cells = 'B1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+            ppk_difference_cells = 'F1:{col}{row}'.format(col=get_column_letter(ws.max_column), row=ws.max_row)
+
+            # set with of Teams column
+            ws.column_dimensions[index_column].width = 21
+
+            # define formatting of the general cells
+            for row in ws[general_cells]:
+                for cell in row:
+                    cell.number_format = '0.00'
+                    cell.border = Border(top=thin, left=double, right=double, bottom=thin)
+                    cell.alignment = Alignment(horizontal='center', vertical='center')
+
+            # format the ppg difference cells with the correct color scale rule
+            ws.conditional_formatting.add(ppk_difference_cells, difference_rule)
+
+            # format the title row
+            for cell in ws[title_row]:
+                cell.style = 'Headline 1'
+                cell.border = Border(top=double, left=double, right=double, bottom=double)
+                cell.font = Font(bold=True)
+                cell.fill = PatternFill('solid', fgColor="BDD7EE")
+
+
+
+
 
     # show that the results are uploaded in the console
     print("results uploaded")
