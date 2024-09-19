@@ -1,6 +1,7 @@
 import selenium.common.exceptions
 from pyshadow.main import Shadow
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import pandas as pd
 import numpy as np
@@ -11,6 +12,9 @@ from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 import re
+
+chrome_options = Options()
+chrome_options.add_argument("--disable-search-engine-choice-screen")
 
 
 def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
@@ -28,13 +32,13 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         return any(char.isdigit() for char in x)
 
     test = True
-    sex = ['H1', 'D1']
+    sex = ['H1', 'D1', 'D1-mix']
 
     # repeat until it works
     while test:
         try:
             # page to access as a string
-            driver = webdriver.Chrome()
+            driver = webdriver.Chrome(options=chrome_options)
             driver.get(url)
             # wait if page has not loaded
             driver.implicitly_wait(5)
@@ -81,6 +85,10 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
             if k in i:
                 text.remove(i)
 
+    # remove slashes in names, so that it can be an excel sheet title
+    for idx, ele in enumerate(text):
+        text[idx] = ele.replace('/', ' ')
+
     # split the data into even position and odd position
     text_odd = text[1::2]
     text_even = text[0::2]
@@ -93,7 +101,6 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
     split_scores = []
     winner = []
     goal_difference = []
-    distance = []
 
     if even == "True":
         # filter even text into team name and pool
@@ -107,7 +114,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         for s in text_odd:
             if any(x in s for x in sex):
                 team_away.append(s)
-            elif has_numbers(s) and "-" in s and len(s) < 6:
+            elif has_numbers(s) and "-" in s and len(s) < 8:
                 score.append(s)
             elif s == 'Afgelast':
                 score.append('69 - 69')
@@ -124,7 +131,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         for s in text_even:
             if any(x in s for x in sex):
                 team_away.append(s)
-            elif has_numbers(s) and "-" in s and len(s) < 6:
+            elif has_numbers(s) and "-" in s and len(s) < 8:
                 score.append(s)
             elif s == 'Afgelast':
                 score.append('69 - 69')
@@ -149,16 +156,6 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
 
     # calculate the goal difference stat
     new_results['Goal Difference'] = new_results['Home Score'] - new_results['Away Score']
-
-    for s in new_results['Home Team']:
-        for i in sex:
-            s = s.replace(i, '')
-
-    for i in range(len(new_results)):
-        h_team = new_results['Home Team'].iloc[i]
-        h_club = h_team.replace('H1', '').replace('D1', '')
-        a_team = new_results['Away Team'].iloc[i]
-        a_club = a_team.replace('H1', '').replace('D1', '')
 
     # find out who won the game, based on goal difference
     new_results.loc[new_results['Goal Difference'] < 0, 'Winner'] = 'Away'
@@ -201,7 +198,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
 
         # renaming all the columns of the data frame
         team_df = team_df.set_axis(['Home Team', 'Home Score', 'Away Score', 'Away Team', 'Goal Difference',
-                                    'Winner', 'Pool', 'Distance', 'home team', 'home score', 'away score', 'away team',
+                                    'Winner', 'Pool', 'home team', 'home score', 'away score', 'away team',
                                     'goal difference', 'winner', 'pool'], axis=1)
 
         # calculate team goals scored, if NaN replace with 0

@@ -1,9 +1,9 @@
 try:
     # run D1 1K Scraper
-    with open(
-            r"C:\Users\Harry Higgins\PycharmProjects\pythonProject\2023-2024\Individual Scrapers\D1 1K Scraper 2324.py"
-    ) as file:
-        exec(file.read())
+    #with open(
+    #        r"C:\Users\Harry Higgins\PycharmProjects\pythonProject\2023-2024\Individual Scrapers\D1 1K Scraper 2324.py"
+    #) as file:
+    #    exec(file.read())
     print('D1 1K Scraper Complete (1/3)')
 
     # run H1 1K Scraper
@@ -22,10 +22,11 @@ try:
 
 except IOError:
     # run D1 1K Scraper
-    with open(
-            r"C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper\2023-2024\Individual Scrapers\D1 1K Scraper 2324.py"
-    ) as file:
-        exec(file.read())
+    #with open(
+    #        r"C:\Users\Harry\OneDrive\University Work\S4\Project\GitHub\KNHB_Scraper\2023-2024\Individual Scrapers\D1 1K Scraper 2324.py"
+    #) as file:
+    #    exec(file.read())
+    print('D1 1K Scraper Complete (1/3)')
 
     # run H1 1K Scraper
     with open(
