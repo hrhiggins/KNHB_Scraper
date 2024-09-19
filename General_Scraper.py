@@ -59,11 +59,15 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
             text = text.splitlines()
             # close the webdriver
             driver.close()
-            print('Success scraping from URL')
-            test = False
+            if not text:
+                test = True
+                print('Did not scrape properly, restarting')
+            else:
+                test = False
+                print('Success scraping from URL')
 
         except selenium.common.exceptions.ElementNotVisibleException:
-            print('Error scraping from URL')
+            print('Error scraping from URL, elements not visible')
             test = True
 
     # read the current scores off the Excel file, check both places it could exist, locate folder to place backup
