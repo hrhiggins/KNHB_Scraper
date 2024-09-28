@@ -5,7 +5,7 @@ import datetime
 now = str(datetime.datetime.now())[:19]
 now = now.replace(":", "_")
 
-progurl = 'https://www.knhb.nl/match-center#/competitions/N7/results'
+progurl = 'https://www.knhb.nl/match-center#/competitions/N7/program'
 url = 'https://www.knhb.nl/match-center#/competitions/N7/results'
 file_path_little = r"C:\Users\Harry\OneDrive\Hockey\Results and Analysis\2024-2025\H1\H1_1K_results_2425.xlsx"
 file_path_big = r"C:\Users\Harry Higgins\OneDrive\Hockey\Results and Analysis\2024-2025\H1\H1_1K_results_2425.xlsx"

@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="run">
+    <list default="true" id="4f0f9be1-046f-42b1-9262-ba0063fe9a22" name="Changes" comment="added a reload clause to load results">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 1K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 1K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 2K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 2K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 3K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 3K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 4K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 4K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 HK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 HK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 OK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 OK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 PK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/D1 PK Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 1K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 1K Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 2K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 2K Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 3K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 3K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 4K Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 4K Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 HK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 HK Scraper 2425.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 OK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 OK Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 PK Scraper 2425.py" beforeDir="false" afterPath="$PROJECT_DIR$/2024-2025/Individual Scrapers/H1 PK Scraper 2425.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General_Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/General_Scraper.py" afterDir="false" />
     </list>
@@ -78,9 +68,11 @@
     &quot;Python.H1 2K Scraper 2425.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 3K Scraper 2425.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 4K Scraper 2425.executor&quot;: &quot;Run&quot;,
+    &quot;Python.H1 HK Scraper 2425.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 OK Scraper 2324.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 OK Scraper 2425.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 Overgangseklasse Scraper 2324.executor&quot;: &quot;Run&quot;,
+    &quot;Python.H1 PK Scraper 2425.executor&quot;: &quot;Run&quot;,
     &quot;Python.H1 Scraper 2324.executor&quot;: &quot;Run&quot;,
     &quot;Python.Only_Excel_Dataparsing.executor&quot;: &quot;Run&quot;,
     &quot;Python.RUN ALL 2324.executor&quot;: &quot;Run&quot;,
@@ -200,6 +192,8 @@
       <workItem from="1726131851022" duration="7546000" />
       <workItem from="1726751082714" duration="4985000" />
       <workItem from="1727446462123" duration="4471000" />
+      <workItem from="1727511113101" duration="623000" />
+      <workItem from="1727511904695" duration="2063000" />
     </task>
     <task id="LOCAL-00001" summary="Began">
       <option name="closed" value="true" />
@@ -353,7 +347,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726756093215</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added a reload clause to load results">
+      <option name="closed" value="true" />
+      <created>1727511317322</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1727511317322</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,7 +371,8 @@
     <MESSAGE value="distance per km" />
     <MESSAGE value="removed distance per km from general scraper, put in 'test general scraper'. Now fully functional" />
     <MESSAGE value="run" />
-    <option name="LAST_COMMIT_MESSAGE" value="run" />
+    <MESSAGE value="added a reload clause to load results" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a reload clause to load results" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -384,30 +387,32 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$RUN_a_few_2425.coverage" NAME="RUN a few 2425 Coverage Results" MODIFIED="1726137580442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025" />
     <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$D1_PK_Scraper_2425.coverage" NAME="D1 PK Scraper 2425 Coverage Results" MODIFIED="1727449115738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_PK_Scraper_2425.coverage" NAME="H1 PK Scraper 2425 Coverage Results" MODIFIED="1727512343581" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_2Scraper_2324.coverage" NAME="D1 2Scraper 2324 Coverage Results" MODIFIED="1714846685572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_1K_Scraper_2324.coverage" NAME="H1 1K Scraper 2324 Coverage Results" MODIFIED="1718053356268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_Overgangseklasse_Scraper_2324.coverage" NAME="H1 Overgangseklasse Scraper 2324 Coverage Results" MODIFIED="1715004150597" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$D1_4K_Scraper_2425.coverage" NAME="D1 4K Scraper 2425 Coverage Results" MODIFIED="1726135795413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D12_1K_Scraper_2324.coverage" NAME="D12 1K Scraper 2324 Coverage Results" MODIFIED="1715010683458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_Scraper_2324.coverage" NAME="D1 Scraper 2324 Coverage Results" MODIFIED="1714999085903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_HK_Scraper_2425.coverage" NAME="H1 HK Scraper 2425 Coverage Results" MODIFIED="1727511497671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$General_Scraper.coverage" NAME="General_Scraper Coverage Results" MODIFIED="1715014678816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Only_Excel_Dataparsing.coverage" NAME="Only_Excel_Dataparsing Coverage Results" MODIFIED="1718053023845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D12_Scraper_2324.coverage" NAME="D12 Scraper 2324 Coverage Results" MODIFIED="1714993729551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_2K_Scraper_2425.coverage" NAME="H1 2K Scraper 2425 Coverage Results" MODIFIED="1726754174112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$D1_HK_Scraper_2425.coverage" NAME="D1 HK Scraper 2425 Coverage Results" MODIFIED="1727448718248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_4K_Scraper_2425.coverage" NAME="H1 4K Scraper 2425 Coverage Results" MODIFIED="1726754472639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_2K_Scraper_2425.coverage" NAME="H1 2K Scraper 2425 Coverage Results" MODIFIED="1727513207785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_4K_Scraper_2425.coverage" NAME="H1 4K Scraper 2425 Coverage Results" MODIFIED="1727513638176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$D1_1K_Scraper_2324.coverage" NAME="D1 1K Scraper 2324 Coverage Results" MODIFIED="1717920302129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_ALL_TEST_2324.coverage" NAME="RUN ALL TEST 2324 Coverage Results" MODIFIED="1715011920122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Scraper.coverage" NAME="Scraper Coverage Results" MODIFIED="1714153013139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_OK_Scraper_2425.coverage" NAME="H1 OK Scraper 2425 Coverage Results" MODIFIED="1726135991464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_OK_Scraper_2425.coverage" NAME="H1 OK Scraper 2425 Coverage Results" MODIFIED="1727511639764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$Test.coverage" NAME="Test Coverage Results" MODIFIED="1714425817889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_Scraper_2324.coverage" NAME="H1 Scraper 2324 Coverage Results" MODIFIED="1714993423666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$RUN_some_2425.coverage" NAME="RUN some 2425 Coverage Results" MODIFIED="1727446476464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$RUN_some_2425.coverage" NAME="RUN some 2425 Coverage Results" MODIFIED="1727512036218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_Test.coverage" NAME="RUN Test Coverage Results" MODIFIED="1721321786202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$RUN_ALL_2324.coverage" NAME="RUN ALL 2324 Coverage Results" MODIFIED="1717920761319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_1K_Scraper_2425.coverage" NAME="H1 1K Scraper 2425 Coverage Results" MODIFIED="1726752284970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_1K_Scraper_2425.coverage" NAME="H1 1K Scraper 2425 Coverage Results" MODIFIED="1727512458332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/KNHB_Scraper$H1_OK_Scraper_2324.coverage" NAME="H1 OK Scraper 2324 Coverage Results" MODIFIED="1718097611844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2023-2024/Individual Scrapers" />
     <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$RUN_ALL_2425.coverage" NAME="RUN ALL 2425 Coverage Results" MODIFIED="1727449175693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025" />
-    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_3K_Scraper_2425.coverage" NAME="H1 3K Scraper 2425 Coverage Results" MODIFIED="1726754232449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
+    <SUITE FILE_PATH="coverage/RUN_ALL_2425_py$H1_3K_Scraper_2425.coverage" NAME="H1 3K Scraper 2425 Coverage Results" MODIFIED="1727513370751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2024-2025/Individual Scrapers" />
   </component>
 </project>

@@ -12,6 +12,7 @@ from openpyxl.formatting.rule import ColorScaleRule
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 import re
+import time
 
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -41,11 +42,13 @@ def general_scraper(progurl, url, file_path_little, file_path_big, dst_dir_littl
         try:
             # page to access as a string
             driver = webdriver.Chrome(options=chrome_options)
+            driver.get(url)
+            driver.implicitly_wait(10)
             driver.get(progurl)
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
             driver.get(url)
             # wait if page has not loaded
-            driver.implicitly_wait(5)
+            driver.implicitly_wait(10)
 
             # deal with cookies popup
             cookies_popup = driver.find_element(By.XPATH, '//*[@id="bcSubmitConsentToAll"]')
@@ -63,9 +66,18 @@ def general_scraper(progurl, url, file_path_little, file_path_big, dst_dir_littl
             text = text.splitlines()
             # close the webdriver
             driver.close()
+
+            for s in text:
+                if s == 'Er zijn nog geen uitslagen bekend.':
+                    test = True
+                    print('No results loaded, restarting')
+
             if not text:
                 test = True
-                print('Did not scrape properly, restarting')
+                print('Did not scrape anything, restarting')
+            elif len(text) < 22:
+                test = True
+                print('Did not scrape results, restarting')
             else:
                 test = False
                 print('Success scraping from URL')
@@ -73,6 +85,8 @@ def general_scraper(progurl, url, file_path_little, file_path_big, dst_dir_littl
         except selenium.common.exceptions.ElementNotVisibleException:
             print('Error scraping from URL, elements not visible')
             test = True
+
+    print(text)
 
     # read the current scores off the Excel file, check both places it could exist, locate folder to place backup
     try:
