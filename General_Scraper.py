@@ -13,11 +13,13 @@ from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 import re
 
+from selenium.webdriver.support.wait import WebDriverWait
+
 chrome_options = Options()
 chrome_options.add_argument("--disable-search-engine-choice-screen")
 
 
-def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
+def general_scraper(progurl, url, file_path_little, file_path_big, dst_dir_little, dst_dir_big, even):
 
     # function to set NaN values with 0
     def replace_nan_with_zero(value):
@@ -39,6 +41,8 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
         try:
             # page to access as a string
             driver = webdriver.Chrome(options=chrome_options)
+            driver.get(progurl)
+            driver.implicitly_wait(5)
             driver.get(url)
             # wait if page has not loaded
             driver.implicitly_wait(5)
@@ -82,7 +86,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
 
     # months in Dutch
     months = ["januari", 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober',
-              'november', 'december']
+              'november', 'december', 'Gestaakt']
     # removing dates for the data
     for i in text:
         for k in months:
@@ -120,7 +124,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
                 team_away.append(s)
             elif has_numbers(s) and "-" in s and len(s) < 8:
                 score.append(s)
-            elif s == 'Afgelast':
+            elif s == 'Afgelast' or s == '-':
                 score.append('69 - 69')
 
     elif even == "False":
@@ -137,7 +141,7 @@ def general_scraper(url, file_path_little, file_path_big, dst_dir_little, dst_di
                 team_away.append(s)
             elif has_numbers(s) and "-" in s and len(s) < 8:
                 score.append(s)
-            elif s == 'Afgelast':
+            elif s == 'Afgelast' or s == '-':
                 score.append('69 - 69')
 
     # split the scores into home score and away score
